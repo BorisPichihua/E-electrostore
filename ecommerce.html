@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Electrostore</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f5f5f5;
+    }
+
+    header {
+      background-color: #4CAF50;
+      color: white;
+      padding: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    header h1 {
+      margin: 0;
+    }
+
+    main {
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: auto;
+    }
+
+    nav {
+      margin-bottom: 20px;
+    }
+
+    nav button {
+      margin-right: 10px;
+    }
+
+    .product {
+      border: 1px solid #ddd;
+      padding: 10px;
+      margin: 10px 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .page-title {
+      background-color: #333;
+      color: white;
+      padding: 50px 0;
+    }
+
+    .breadcrumb {
+      background: transparent;
+      padding: 0;
+    }
+
+    footer {
+      background-color: #333;
+      color: white;
+      text-align: center;
+      padding: 20px;
+      position: relative;
+      bottom: 0;
+      width: 100%;
+    }
+
+    .btn-dark {
+      background-color: #1815c4;
+      color: white;
+      padding: 10px 5px;
+      border: none;
+      cursor: pointer;
+    }
+
+    .btn-dark:hover {
+      background-color: #5d0fa5;
+    }
+
+    .swiper {
+      display: flex;
+    }
+
+    .product-thumbnail-slider img,
+    .product-large-slider img {
+      max-width: 100%;
+      height: auto;
+    }
+  </style>
+  <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+         }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+         }
+        .hidden {
+            display: none;
+         }
+        .product {
+            margin: 10px 0;
+            display: flex;
+            justify-content: space-between;
+            padding: 10px;
+            background-color: #e6f7ff;
+            border-radius: 5px;
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+         }
+        button {
+            background-color: #02005f;
+            color: white;
+            border: none;
+            padding: 15px 10px;
+            cursor: pointer;
+            border-radius: 5px;
+         }
+        button:hover {
+            background-color: #098d1b;
+         }
+        aside {
+            background-color: #f0f8ff;
+            border-left: 3px solid #004080;
+            padding: 100px;
+            color: #004080;
+            margin-top: 20px;
+         }
+        input, button {
+            margin-bottom: 10px;
+            padding: 8px;
+            border-radius: 5px;
+            width: 10%;
+         }
+        h1, h2 {
+            color: #004080;
+         }
+    </style>
+</head>
+
+<body>
+
+  <header>
+    <h1>Tienda Virtual</h1>
+    <button onclick="viewCart()">Carrito (0)</button>
+  </header>
+
+  <main>
+
+    <section id="login-page">
+      <h2>Registro / Inicio de Sesión</h2>
+      <input id="username" type="text" placeholder="Nombre de usuario">
+      <button onclick="login()">Iniciar Sesión</button>
+    </section>
+
+
+    <section id="products-page" class="hidden">
+      <h2>Lista de Productos</h2>
+      <nav>
+        <button onclick="filterProducts('hombres')">Hombres</button>
+        <button onclick="filterProducts('mujeres')">Mujeres</button>
+        <button onclick="filterProducts('niños')">Niños</button>
+        <button onclick="filterProducts('todos')">Todos</button>
+      </nav>
+      <div id="product-list"></div>
+    </section>
+
+    <section id="cart-page" class="hidden">
+      <h2>Carrito de Compras</h2>
+      <div id="cart-list"></div>
+      <button onclick="checkout()">Finalizar Pedido</button>
+      <button onclick="goBackToProducts()">Volver a Productos</button>
+    </section>
+
+    <section id="checkout-page" class="hidden">
+      <h2>Finalizar Pedido</h2>
+      <form id="shipping-form">
+        <h3>Detalles de Envío</h3>
+        <label>Dirección:</label>
+        <input type="text" placeholder="Ingrese su dirección" required>
+        <label>Ciudad:</label>
+        <input type="text" placeholder="Ingrese su ciudad" required>
+      </form>
+      <form id="payment-form">
+        <h3>Detalles de Pago</h3>
+        <label>Número de Tarjeta:</label>
+        <input type="text" maxlength="16" placeholder="Ingrese los 16 dígitos" required>
+        <label>Fecha de Vencimiento:</label>
+        <input type="text" placeholder="MM/AA" required>
+        <label>CVV:</label>
+        <input type="text" maxlength="3" placeholder="XXX" required>
+        <label>Nombre del Titular:</label>
+        <input type="text" placeholder="Nombre como aparece en la tarjeta" required>
+      </form>
+      <button onclick="completeOrder()">Completar Pedido</button>
+    </section>
+
+    <section id="order-tracking" class="py-5">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-6">
+            <h2>Seguimiento de pedidos</h2>
+            <p>Ingrese el número de su pedido y presione el botón “Seguimiento”. Este número se le proporcionó en su recibo y en el correo electrónico de confirmación que debería haber recibido.</p>
+            <form id="form" class="form-group">
+              <div class="col-12 pb-3">
+                <label>ID del pedido</label>
+                <input type="text" name="name" placeholder="Found in your order confirmation email" class="form-control">
+              </div>
+              <div class="col-12 pb-3">
+                <label>Correo electrónico de facturación</label>
+                <input type="text" name="email" placeholder="Email you used during checkout." class="form-control">
+              </div>
+              <div class="col-12">
+                <button type="submit" name="submit" class="btn btn-dark btn-lg w-100 text-uppercase">Seguimiento</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <p>&copy; 2024 Electrostore. Todos los derechos reservados.</p>
+    <div class="footer-menu footer-menu-002">
+          <h5 class="widget-title mb-4">Acerca de</h5>
+          <ul class="menu-list list-unstyled fs-6">
+            <li class="menu-item">
+              <a href="index" class="item-anchor">Como funciona</a>
+            </li>
+            <li class="menu-item">
+              <a href="shop-four-column-wide" class="item-anchor">Acerca</a>
+            </li>
+            <li class="menu-item">
+              <a href="blog" class="item-anchor">Nuestros paquetes</a>
+            </li>
+            <li class="menu-item">
+              <a href="styles" class="item-anchor">Promociones</a>
+            </li>
+            <li class="menu-item">
+              <a href="#" class="item-anchor">Referenciar a mis amigos</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+  </footer>
+
+  <script>
+    const products = [
+      { id: 1, name: "Smartwatches negro", price: 20, category: "hombres" },
+      { id: 2, name: "Audifonos rosados", price: 25, category: "mujeres" },
+      { id: 3, name: "Audifono kids", price: 15, category: "niños" },
+      { id: 4, name: "Reloj negro", price: 50, category: "hombres" },
+      { id: 5, name: "Samsumg rosado", price: 30, category: "mujeres" },
+      { id: 6, name: "Samsumg rosado", price: 30, category: "mujeres" },
+      { id: 7, name: "Samsumg rosado", price: 30, category: "mujeres" },
+      { id: 8, name: "Samsumg rosado", price: 60, category: "hombres" },
+      { id: 9, name: "Samsumg rosado", price: 30, category: "mujeres" },
+      { id: 10, name: "Samsumg rosado", price: 45, category: "niños" },
+    ];
+
+    const cart = [];
+    let cartCount = 0;
+
+    function login() {
+      const username = document.getElementById("username").value;
+      if (username) {
+        document.getElementById("login-page").classList.add("hidden");
+        document.getElementById("products-page").classList.remove("hidden");
+        renderProducts();
+      } else {
+        alert("Por favor, ingresa tu nombre de usuario.");
+      }
+    }
+
+    function renderProducts(category = "todos") {
+      const productList = document.getElementById("product-list");
+      productList.innerHTML = "";
+      const filteredProducts = category === "todos" ? products : products.filter(p => p.category === category);
+      filteredProducts.forEach(product => {
+        const productDiv = document.createElement("div");
+        productDiv.classList.add("product");
+        productDiv.innerHTML = `
+          <div>${product.name}</div>
+          <div>$${product.price}</div>
+          <button onclick="addToCart(${product.id})">Agregar al carrito</button>
+        `;
+        productList.appendChild(productDiv);
+      });
+    }
+
+    function addToCart(productId) {
+      const product = products.find(p => p.id === productId);
+      cart.push(product);
+      cartCount++;
+      document.querySelector("button[onclick='viewCart()']").textContent = `Carrito (${cartCount})`;
+    }
+
+    function viewCart() {
+      document.getElementById("products-page").classList.add("hidden");
+      document.getElementById("cart-page").classList.remove("hidden");
+      renderCart();
+    }
+
+    function renderCart() {
+      const cartList = document.getElementById("cart-list");
+      cartList.innerHTML = "";
+      cart.forEach(product => {
+        const cartItem = document.createElement("div");
+        cartItem.textContent = `${product.name} - $${product.price}`;
+        cartList.appendChild(cartItem);
+      });
+    }
+
+    function checkout() {
+      document.getElementById("cart-page").classList.add("hidden");
+      document.getElementById("checkout-page").classList.remove("hidden");
+    }
+
+    function completeOrder() {
+      alert("¡Gracias por tu compra!");
+    }
+
+    function goBackToProducts() {
+      document.getElementById("cart-page").classList.add("hidden");
+      document.getElementById("products-page").classList.remove("hidden");
+    }
+
+    function filterProducts(category) {
+      renderProducts(category);
+    }
+  </script>
+
+</body>
+
+</html>

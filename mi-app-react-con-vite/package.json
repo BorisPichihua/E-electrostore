@@ -5,7 +5,6 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "dev": "nodemon --exec ./node_modules/.bin/babel-node app.jsx",
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview"

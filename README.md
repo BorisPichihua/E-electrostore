@@ -13,4 +13,8 @@ Currently, two official plugins are available:
 Integrantes- Avance 5 - E-commerce
 Boris Pichihua Pardo
 
-Local:   http://localhost:5173/
+Para su visualización del proyecto.
+
+PS C:\Users\BPICHIHUA\Desktop\E-electrostore> cd mi-app-react-con-vite
+
+PS C:\Users\BPICHIHUA\Desktop\E-electrostore\mi-app-react-con-vite> npm run dev

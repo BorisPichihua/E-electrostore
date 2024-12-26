@@ -1,7 +1,11 @@
-import React from 'react';
-
-const Button = ({ label, onClick }) => {
-  return <button onClick={onClick}>{label}</button>;
-};
+const Button = ({id, text, isPrimary, handleClick}) =>
+  (
+      <button
+          onClick={() => handleClick(id)}
+          className={isPrimary ? 'button-primary' : 'button'}
+      >
+          {text}
+      </button>
+  );
 
 export default Button;

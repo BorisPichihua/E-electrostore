@@ -1,18 +1,18 @@
-import React, { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
-const CounterWithUseEffect = () => {
-  const [count, setCount] = useState(0);
+function CounterWithUseEffect() {
+    const [count, setCount] = useState(0);
 
-  useEffect(() => {
-    console.log(`Count updated: ${count}`);
-  }, [count]);
+    useEffect(() => {
+        console.log('La variable count se actualizo.')
+    }, [count])
 
-  return (
-    <div>
-      <h3>Counter with useEffect: {count}</h3>
-      <button onClick={() => setCount(count + 1)}>Increment</button>
-    </div>
-  );
-};
+    return (
+        <>
+            <p>El valor de Count es: {count} </p>
+            <button onClick={() => setCount(count + 1)}>Aumentar</button>
+        </>
+     );
+}
 
 export default CounterWithUseEffect;

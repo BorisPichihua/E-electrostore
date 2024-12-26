@@ -1,16 +1,22 @@
-import React, { useState, useEffect } from 'react';
+import {useEffect} from 'react';
 
-const Window = () => {
-  const [width, setWidth] = useState(window.innerWidth);
+function Window() {
+    useEffect(() => {
+        const handleResize = () => {
+            console.log('La ventana cambio su tamaño');
+        }
 
-  useEffect(() => {
-    const handleResize = () => setWidth(window.innerWidth);
-    window.addEventListener('resize', handleResize);
+        window.addEventListener('resize', handleResize);
 
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        }
+    }, []);
 
-  return <div>Window width: {width}</div>;
-};
+    return (
+        <p>Abrimos la consola del Navegador y modificamos el tamaño de la pagina</p>
+     );
+}
+
 
 export default Window;

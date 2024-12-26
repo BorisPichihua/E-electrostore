@@ -1,7 +1,22 @@
-import React from 'react';
+import { useId } from 'react';
 
-const PasswordField = () => {
-  return <input type="password" placeholder="Enter your password" />;
-};
+function PasswordField() {
+    const passwordHintId = useId();
+
+    return (
+        <>
+            <label>
+                Password:
+                <input
+                    type="password"
+                    aria-describedby={passwordHintId}
+                />
+            </label>
+            <p id={passwordHintId}>
+                El password debe ser mayor a 8 caracteres
+            </p>
+        </>
+     );
+}
 
 export default PasswordField;

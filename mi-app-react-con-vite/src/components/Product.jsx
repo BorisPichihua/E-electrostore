@@ -1,12 +1,9 @@
-import React from 'react';
-
-const Product = ({ name, price }) => {
-  return (
-    <div>
-      <h4>{name}</h4>
-      <p>${price}</p>
-    </div>
+const Product = (props) =>
+  (
+      <div className="product">
+          <h2>{props.title}</h2>
+          <div>{props.children}</div>
+      </div>
   );
-};
 
 export default Product;

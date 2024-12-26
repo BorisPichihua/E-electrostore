@@ -1,11 +1,13 @@
-import React from 'react';
+import { Link } from 'react-router-dom';
 
-const Navbar = () => {
+const Navbar = ({ menus }) => {
   return (
-    <nav className="navbar">
-      <a href="#home">Home</a>
-      <a href="#products">Products</a>
-      <a href="#cart">Cart</a>
+    <nav>
+      {menus.map((menu) => (
+        <Link key={menu.id} to={menu.path}>
+          {menu.name}
+        </Link>
+      ))}
     </nav>
   );
 };

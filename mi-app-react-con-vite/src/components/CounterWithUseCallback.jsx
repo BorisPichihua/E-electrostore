@@ -1,18 +1,16 @@
-import React, { useState, useCallback } from 'react';
+import { useCallback } from 'react';
 
-const CounterWithUseCallback = () => {
-  const [count, setCount] = useState(0);
+function CounterWithUseCallback({count, onIncrement}) {
+    const handleIncrement = useCallback(() => {
+        onIncrement(count)
+    }, [count, onIncrement])
 
-  const increment = useCallback(() => {
-    setCount((prev) => prev + 1);
-  }, []);
-
-  return (
-    <div>
-      <h3>Counter with useCallback: {count}</h3>
-      <button onClick={increment}>Increment</button>
-    </div>
-  );
-};
+    return (
+        <div>
+            <p>El valor de Count: {count}</p>
+            <button onClick={handleIncrement}>Incrementar</button>
+        </div>
+    );
+}
 
 export default CounterWithUseCallback;

@@ -1,21 +1,16 @@
-import React, { useState, useMemo } from 'react';
+import { useMemo, useState } from 'react';
 
-const CounterWithUseMemo = () => {
-  const [count, setCount] = useState(0);
-  const [otherState, setOtherState] = useState(0);
+function CounterWithUseMemo({count}) {
+    const [nuevoContador, setnuevoContador] = useState(count);
+    const double = useMemo(() => nuevoContador * 2, [nuevoContador])
 
-  const expensiveComputation = useMemo(() => {
-    console.log('Computing...');
-    return count * 2;
-  }, [count]);
-
-  return (
-    <div>
-      <h3>Counter with useMemo: {expensiveComputation}</h3>
-      <button onClick={() => setCount(count + 1)}>Increment</button>
-      <button onClick={() => setOtherState(otherState + 1)}>Change Other State</button>
-    </div>
-  );
-};
+    return (
+        <div>
+            <p>El valor de Count: {nuevoContador}</p>
+            <p>El valor de Double: {double}</p>
+            <button onClick={() => setnuevoContador(nuevoContador + 1)}>Aumentar</button>
+        </div>
+    );
+}
 
 export default CounterWithUseMemo;
